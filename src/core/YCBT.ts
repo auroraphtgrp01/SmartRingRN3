@@ -515,17 +515,94 @@ export class YCBTClientImpl {
     }
   }
   
+  /**
+   * Gửi dữ liệu với loại nhóm cụ thể đến thiết bị, dùng khi cần chỉ định loại giao thức đặc biệt
+   * @param dataType Loại dữ liệu (mã lệnh)
+   * @param groupType Loại nhóm (1: Command, 2: Setting, 3: Health, 4: Collection, 5: Collection_timestamp, ...)
+   * @param data Dữ liệu cần gửi
+   * @param priority Độ ưu tiên (1-3)
+   * @param response Callback phản hồi 
+   */
+  public sendDataType2Device(
+    dataType: number,
+    groupType: number,
+    data: Uint8Array,
+    priority: number = 2,
+    response: BleDataResponse | null = null
+  ): void {
+    console.log(`Sending data with specific group: dataType=${dataType}, groupType=${groupType}, priority=${priority}`);
+    
+    // Tạo bean dữ liệu với các tham số cụ thể
+    const sendBean: YCSendBean = {
+      willData: data,
+      dataType: dataType,
+      groupType: groupType,
+      sendPriority: priority,
+      mDataResponse: response,
+      dataSendFinish: false,
+      willSendFrame: function() {
+        return this.willData;
+      },
+      resetGroup: function(dataType: number, data: Uint8Array) {
+        this.dataType = dataType;
+        this.willData = data;
+      },
+      collectStopReset: function() {
+        // Triển khai nếu cần
+      }
+    };
+    
+    // Thêm vào hàng đợi gửi
+    this.pushQueue(sendBean);
+  }
+  
   // Thêm vào hàng đợi gửi
   private pushQueue(sendBean: YCSendBean): void {
     console.log("pushQueue groupType=", sendBean.groupType, "mSendQueue.size()=", this.mSendQueue.length);
+    
+    // Kiểm tra trạng thái kết nối trước khi thêm vào hàng đợi
+    if (this.mBleStateCode !== 10 && this.mBleStateCode !== 9) {
+      console.log("Thiết bị không được kết nối hoặc không sẵn sàng, trạng thái:", this.mBleStateCode);
+      // Gọi callback với lỗi
+      if (sendBean.mDataResponse) {
+        setTimeout(() => {
+          sendBean.mDataResponse?.onDataResponse(1, 0, { error: 'Thiết bị không được kết nối!' });
+        }, 0);
+      }
+      return;
+    }
+    
+    // Giới hạn kích thước hàng đợi
+    if (this.mSendQueue.length >= 20) {
+      console.log("Hàng đợi quá lớn (>= 20), hủy yêu cầu");
+      // Gọi callback với lỗi
+      if (sendBean.mDataResponse) {
+        setTimeout(() => {
+          sendBean.mDataResponse?.onDataResponse(1, 0, { error: 'Hàng đợi quá tải!' });
+        }, 0);
+      }
+      return;
+    }
     
     this.mSendQueue.push(sendBean);
     
     console.log("Queue size:", this.mSendQueue.length);
     
+    // Kiểm tra và đặt lại các biến trạng thái nếu cần
+    if (this.mSendQueue.length === 1 && (this.mQueueSendState || !this.isGattWriteCallBackFinish)) {
+      console.log("Phát hiện trạng thái bất thường, đặt lại biến trạng thái");
+      this.mQueueSendState = false;
+      this.isGattWriteCallBackFinish = true;
+    }
+    
     if (!this.mQueueSendState && !this.isRecvRealEcging) {
       // Gọi frontQueue ngay lập tức nếu không có hoạt động nào đang diễn ra
       setTimeout(() => this.frontQueue(), 0);
+    } else {
+      // Log trạng thái nếu không thể xử lý ngay
+      console.log("Không thể xử lý hàng đợi ngay: mQueueSendState=", this.mQueueSendState, 
+                  "isRecvRealEcging=", this.isRecvRealEcging, 
+                  "isGattWriteCallBackFinish=", this.isGattWriteCallBackFinish);
     }
   }
   
@@ -732,6 +809,73 @@ export class YCBTClientImpl {
     if (index >= 0) {
       this.mBleStatelistens.splice(index, 1);
     }
+  }
+
+  /**
+   * Gửi yêu cầu lấy lịch sử giấc ngủ, tương đương với YCBTClient.healthHistoryData(4, bleDataResponse)
+   * trong mã nguồn Java gốc
+   * @param response Callback nhận phản hồi dữ liệu
+   */
+  public getSleepHistoryData(response: BleDataResponse | null = null): void {
+    // Sleep history có mã là 4 trong SDK Java
+    const SLEEP_HISTORY_TYPE = 4;
+    
+    console.log(`Gửi yêu cầu lấy lịch sử giấc ngủ, mã: ${SLEEP_HISTORY_TYPE}`);
+    
+    // Tạo dữ liệu có 1 byte với giá trị 4 (mã lịch sử giấc ngủ)
+    const data = new Uint8Array([SLEEP_HISTORY_TYPE]);
+    
+    // Gọi phương thức healthHistoryData theo đúng cách triển khai trong Java
+    this.sendDataType2Device(1284, 3, data, 2, response);
+  }
+  
+  /**
+   * Gửi yêu cầu lấy lịch sử giấc ngủ với khoảng thời gian cụ thể
+   * @param startTimestamp Thời điểm bắt đầu (Unix timestamp)
+   * @param endTimestamp Thời điểm kết thúc (Unix timestamp)
+   * @param response Callback nhận phản hồi dữ liệu
+   */
+  public getSleepHistoryWithTimeRange(
+    startTimestamp: number,
+    endTimestamp: number,
+    response: BleDataResponse | null = null
+  ): void {
+    console.log(`Gửi yêu cầu lấy lịch sử giấc ngủ từ ${new Date(startTimestamp * 1000).toLocaleString()} đến ${new Date(endTimestamp * 1000).toLocaleString()}`);
+    
+    // Tạo mảng byte 8 byte để lưu khoảng thời gian (4 byte cho thời gian bắt đầu và 4 byte cho thời gian kết thúc)
+    const timeParams = new Uint8Array(8);
+    
+    // Chuyển các mốc thời gian Unix timestamp sang định dạng little-endian (byte thấp ở vị trí đầu tiên)
+    
+    // Thời gian bắt đầu
+    timeParams[0] = startTimestamp & 0xFF;
+    timeParams[1] = (startTimestamp >> 8) & 0xFF;
+    timeParams[2] = (startTimestamp >> 16) & 0xFF;
+    timeParams[3] = (startTimestamp >> 24) & 0xFF;
+    
+    // Thời gian kết thúc
+    timeParams[4] = endTimestamp & 0xFF;
+    timeParams[5] = (endTimestamp >> 8) & 0xFF;
+    timeParams[6] = (endTimestamp >> 16) & 0xFF;
+    timeParams[7] = (endTimestamp >> 24) & 0xFF;
+    
+    // Gọi phương thức sendDataType2Device để gửi yêu cầu tới thiết bị
+    // 1284 = 0x0504 là mã cho Health_HistorySleep
+    // groupType 3 là mã cho Health
+    this.sendDataType2Device(1284, 3, timeParams, 2, response);
+  }
+  
+  /**
+   * Gửi yêu cầu lấy lịch sử giấc ngủ trong 7 ngày gần đây
+   * @param response Callback nhận phản hồi dữ liệu
+   */
+  public getRecentSleepHistory(response: BleDataResponse | null = null): void {
+    // Lấy thời gian hiện tại và thời gian 7 ngày trước (tính bằng giây)
+    const currentTime = Math.floor(Date.now() / 1000);
+    const weekAgoTime = currentTime - (7 * 24 * 60 * 60);
+    
+    // Gọi phương thức lấy dữ liệu giấc ngủ với khoảng thời gian cụ thể
+    this.getSleepHistoryWithTimeRange(weekAgoTime, currentTime, response);
   }
 }
 

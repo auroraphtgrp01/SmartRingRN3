@@ -248,24 +248,24 @@ export default function App() {
           // Connect to device using ycbtClientImpl
           try {
             addLog(`Connecting to device ${device.name || 'Unnamed'} (${device.id})...`);
-            
+
             // First connect using the standard BLE connection
             const connectedDevice = await connectToDevice(device, addLog);
-            
+
             if (connectedDevice) {
               addLog(`✅ Connected to device ${connectedDevice.name || 'Unnamed'} (${connectedDevice.id})`);
               setDevice(connectedDevice);
-              
+
               // Notify BackgroundService about connected device
               backgroundService.setCurrentDevice(connectedDevice);
-              
+
               // Setup necessary characteristics
               const { writeCharacteristic, notifyCharacteristic } = await setupCharacteristics(connectedDevice, addLog);
-              
+
               setWriteCharacteristic(writeCharacteristic);
               setNotifyCharacteristic(notifyCharacteristic);
               setIsDiscoverService(true);
-              
+
               // Now connect using ycbtClientImpl
               try {
                 await ycbtClientImpl.connectBle(connectedDevice.id);
@@ -297,20 +297,29 @@ export default function App() {
   const sendEvent = async () => {
     try {
       if (device) {
-        addLog(`Sending event to device ${device.name || 'Unnamed'} (${device.id})...`);
-        handleGetDeviceInfo()
+        addLog(`Gửi yêu cầu lấy lịch sử giấc ngủ từ thiết bị ${device.name || 'Unnamed'} (${device.id})...`);
+        // Sử dụng phương thức mới getSleepHistoryData để gửi đúng định dạng cho lệnh lấy lịch sử giấc ngủ
+        ycbtClientImpl.getSleepHistoryData({
+          onDataResponse: (code, f, hashMap) => {
+            console.error('Dữ liệu giấc ngủ:', code, hashMap);
+            addLog(`Nhận phản hồi từ thiết bị - Mã: ${code}`);
+            if (hashMap) {
+              addLog(`Dữ liệu: ${JSON.stringify(hashMap)}`);
+            }
+          }
+        });
       } else {
-        addLog('No device connected');
+        addLog('Không có thiết bị được kết nối');
       }
     } catch (error) {
-      addLog(`Error when sending event: ${error}`);
+      addLog(`Lỗi khi gửi yêu cầu: ${error}`);
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Smart Ring SpO2 Monitoring App</Text>
-      
+
       <TouchableOpacity
         style={styles.button}
         onPress={scanDevices}
@@ -332,19 +341,19 @@ export default function App() {
                 try {
                   // First connect using standard BLE connection
                   const connectedDevice = await ycbtClientImpl.connectBle(device.id);
-                  
+
                   if (connectedDevice) {
                     setDevice(connectedDevice);
                     addLog('Connected successfully!');
-                    
-                    const { writeCharacteristic: wChar, notifyCharacteristic: nChar } = 
+
+                    const { writeCharacteristic: wChar, notifyCharacteristic: nChar } =
                       await setupCharacteristics(connectedDevice, addLog);
-                    
+
                     if (wChar) setWriteCharacteristic(wChar);
                     if (nChar) setNotifyCharacteristic(nChar);
                     setBluetoothReady(true);
                     setIsDiscoverService(true);
-                    
+
                     // Now connect using ycbtClientImpl
                     try {
                       addLog(`Initializing YCBT client for device ${connectedDevice.id}...`);
