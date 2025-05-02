@@ -20,6 +20,7 @@ import {
 } from '../services/BluetoothService';
 import { ycbtClientImpl } from '../core/YCBT';
 import { handleGetDeviceInfo } from '../services/DeviceService';
+import { dataSync, DataSyncEvent, SyncState } from '../datasync';
 
 // Main App
 export default function App() {
@@ -297,22 +298,48 @@ export default function App() {
   const sendEvent = async () => {
     try {
       if (device) {
-        addLog(`Gửi yêu cầu lấy lịch sử giấc ngủ từ thiết bị ${device.name || 'Unnamed'} (${device.id})...`);
-        // Sử dụng phương thức mới getSleepHistoryData để gửi đúng định dạng cho lệnh lấy lịch sử giấc ngủ
-        ycbtClientImpl.getSleepHistoryData({
-          onDataResponse: (code, f, hashMap) => {
-            console.error('Dữ liệu giấc ngủ:', code, hashMap);
-            addLog(`Nhận phản hồi từ thiết bị - Mã: ${code}`);
-            if (hashMap) {
-              addLog(`Dữ liệu: ${JSON.stringify(hashMap)}`);
+        addLog(`Bắt đầu đồng bộ dữ liệu từ thiết bị ${device.name || 'Unnamed'} (${device.id})...`);
+        
+        // Tạo callback cho DataSyncEvent
+        const syncEvent: DataSyncEvent = {
+          callback: (state: SyncState) => {
+            switch (state) {
+              case SyncState.START:
+                addLog('Bắt đầu đồng bộ dữ liệu...');
+                break;
+              case SyncState.SUCCESS:
+                addLog('Đồng bộ dữ liệu thành công!');
+                // Hiển thị dữ liệu raw đã đồng bộ
+                const responses = dataSync.getRawResponses();
+                for (const [type, data] of responses.entries()) {
+                  addLog(`Dữ liệu loại 0x${type.toString(16).toUpperCase()}: ${data.raw}`);
+                  addLog(`  Mã trạng thái: ${data.code}`);
+                }
+                
+                // Hiển thị tất cả các gói hex raw
+                addLog('\nTất cả các gói raw:');
+                const allPackets = dataSync.getAllRawPackets();
+                allPackets.forEach((packet, index) => {
+                  addLog(`${index + 1}. ${packet}`);
+                });
+                break;
+              case SyncState.FAILED:
+                addLog('Đồng bộ dữ liệu thất bại!');
+                break;
+              case SyncState.END:
+                addLog('Kết thúc quá trình đồng bộ.');
+                break;
             }
           }
-        });
+        };
+        
+        // Bắt đầu đồng bộ dữ liệu
+        dataSync.startDataSync(syncEvent);
       } else {
         addLog('Không có thiết bị được kết nối');
       }
     } catch (error) {
-      addLog(`Lỗi khi gửi yêu cầu: ${error}`);
+      addLog(`Lỗi khi đồng bộ dữ liệu: ${error}`);
     }
   };
 

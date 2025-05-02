@@ -1,5 +1,6 @@
 import { BleManager, Device, Characteristic } from 'react-native-ble-plx';
 import { Buffer } from 'buffer';
+import { TimeSync } from './TimeSync';
 
 interface BleConnectResponse {
   onConnectResponse: (code: number) => void;
@@ -89,8 +90,51 @@ export class YCBTClientImpl {
       this.mBleConnectResponse = response;
     }
     
-    console.log(`connectBle deviceId=${deviceId}, isRepeat=true`);
+    console.log(`connectBle deviceId=${deviceId}`);
     
+    // Kiểm tra xem thiết bị đã được kết nối hay chưa
+    if (this.connectedDevice && this.mBleStateCode >= 9) {
+      console.log('Thiết bị đã được kết nối. ID thiết bị:', this.connectedDevice.id);
+      
+      // Nếu đang kết nối với thiết bị khác, ngắt kết nối và kết nối với thiết bị mới
+      if (this.connectedDevice.id !== deviceId) {
+        console.log('Ngắt kết nối thiết bị hiện tại để kết nối thiết bị mới');
+        this.disconnectBle();
+        // Sau khi ngắt kết nối, đặt timeout để kết nối lại
+        setTimeout(() => this.connectBleDevice(deviceId, timeout), 500);
+      } else {
+        // Trả về thiết bị đã kết nối và thông báo trạng thái
+        if (this.mBleConnectResponse) {
+          this.mBleConnectResponse.onConnectResponse(0);
+        }
+        return this.connectedDevice;
+      }
+    } else {
+      // Kết nối mới nếu chưa kết nối
+      this.connectBleDevice(deviceId, timeout);
+    }
+    
+    return this.connectedDevice;
+  }
+
+  // Phương thức riêng để thực hiện kết nối
+  private connectBleDevice(deviceId: string, timeout: number): void {
+    // Hủy kết nối hiện tại nếu có
+    if (this.connectedDevice) {
+      this.connectedDevice.cancelConnection()
+        .catch(error => console.log('Error clearing old connection:', error))
+        .finally(() => {
+          this.connectedDevice = null;
+          this.bleStateResponse(3);
+          this.startNewConnection(deviceId, timeout);
+        });
+    } else {
+      this.startNewConnection(deviceId, timeout);
+    }
+  }
+
+  // Bắt đầu kết nối mới
+  private startNewConnection(deviceId: string, timeout: number): void {
     this.bleManager.connectToDevice(deviceId, { timeout })
       .then(device => {
         this.connectedDevice = device;
@@ -120,15 +164,37 @@ export class YCBTClientImpl {
           );
           
           this.bleStateResponse(10); // Đã kết nối đầy đủ và sẵn sàng
+          
+          // Thêm đồng bộ thời gian sau khi kết nối thành công
+          console.log('Đang đồng bộ thời gian với thiết bị...');
+          
+          // Delay ngắn để đảm bảo kết nối ổn định trước khi gửi lệnh
+          setTimeout(() => {
+            // Đồng bộ thời gian hiện tại
+            TimeSync.syncTime(this, {
+              onDataResponse: (code: number, f: number, data: any) => {
+                console.log('Đồng bộ thời gian kết quả:', code);
+                
+                // Sau khi đồng bộ thời gian thành công, đồng bộ múi giờ
+                if (code === 0) {
+                  setTimeout(() => {
+                    TimeSync.syncTimeZone(this, {
+                      onDataResponse: (code: number, f: number, data: any) => {
+                        console.log('Đồng bộ múi giờ kết quả:', code);
+                      }
+                    });
+                  }, 500);
+                }
+              }
+            });
+          }, 1000);
         }
       })
       .catch(error => {
         console.log('Connection error:', error);
         this.bleStateResponse(3); // Lỗi kết nối
       });
-      return this.connectedDevice;
   }
-
   
   // Ngắt kết nối với thiết bị BLE
   public disconnectBle(): void {
