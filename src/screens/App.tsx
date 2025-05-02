@@ -19,6 +19,7 @@ import {
   setupCharacteristics
 } from '../services/BluetoothService';
 import { ycbtClientImpl } from '../core/YCBT';
+import { handleGetDeviceInfo } from '../services/DeviceService';
 
 // Main App
 export default function App() {
@@ -297,12 +298,7 @@ export default function App() {
     try {
       if (device) {
         addLog(`Sending event to device ${device.name || 'Unnamed'} (${device.id})...`);
-        ycbtClientImpl.sendSingleData2Device(512, new Uint8Array([71, 67]), 2, {
-          onDataResponse: (status, data) => {
-            console.log('Thông tin thiết bị:', data);
-          }
-        });
-        
+        handleGetDeviceInfo()
       } else {
         addLog('No device connected');
       }
