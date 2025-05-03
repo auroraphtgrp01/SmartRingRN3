@@ -312,15 +312,22 @@ export default function App() {
                 // Hiển thị dữ liệu raw đã đồng bộ
                 const responses = dataSync.getRawResponses();
                 for (const [type, data] of responses.entries()) {
-                  addLog(`Dữ liệu loại 0x${type.toString(16).toUpperCase()}: ${data.raw}`);
+                  addLog(`Dữ liệu loại 0x${type.toString(16).toUpperCase()}: ${data.raw || 'N/A'}`);
                   addLog(`  Mã trạng thái: ${data.code}`);
                 }
                 
-                // Hiển thị tất cả các gói hex raw
-                addLog('\nTất cả các gói raw:');
+                // Hiển thị tất cả các gói raw dạng hex
+                addLog('\nTất cả các gói raw (Hex):');
                 const allPackets = dataSync.getAllRawPackets();
                 allPackets.forEach((packet, index) => {
                   addLog(`${index + 1}. ${packet}`);
+                });
+                
+                // Hiển thị tất cả các gói raw dạng mảng byte có dấu
+                addLog('\nTất cả các gói raw (Byte):');
+                const allByteArrays = dataSync.getAllRawByteArrays();
+                allByteArrays.forEach((byteArray, index) => {
+                  addLog(`${index + 1}. ${byteArray.join(',')}`);
                 });
                 break;
               case SyncState.FAILED:

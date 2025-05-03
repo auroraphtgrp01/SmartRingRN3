@@ -525,6 +525,50 @@ export class YCBTClientImpl {
     }
   }
   
+  /**
+   * Đồng bộ dữ liệu lịch sử sức khỏe từ thiết bị, tương ứng với YCBTClient.healthHistoryData() trong Java
+   * @param type Loại dữ liệu cần đồng bộ (0x502: Sport, 0x504: Sleep, 0x506: Heart, 0x508: Blood, 0x509: All, ...)
+   * @param response Callback nhận phản hồi dữ liệu
+   */
+  public healthHistoryData(type: number, response: BleDataResponse | null = null): void {
+    console.log(`Đồng bộ dữ liệu lịch sử sức khỏe, loại: 0x${type.toString(16).toUpperCase()}`);
+    
+    // Tạo dữ liệu với type được chỉ định
+    const data = new Uint8Array([type & 0xFF]);
+    
+    // Tính toán dataType dựa trên loại dữ liệu
+    let dataType = 0;
+    switch (type) {
+      case 0x502: // Sport
+        dataType = 1282; // 0x502
+        break;
+      case 0x504: // Sleep
+        dataType = 1284; // 0x504
+        break;
+      case 0x506: // Heart
+        dataType = 1286; // 0x506
+        break;
+      case 0x508: // Blood
+        dataType = 1288; // 0x508
+        break;
+      case 0x509: // All
+        dataType = 1289; // 0x509
+        break;
+      case 0x52D: // Comprehensive
+        dataType = 1325; // 0x52D
+        break;
+      case 0x52F: // SportMode
+        dataType = 1327; // 0x52F
+        break;
+      default:
+        dataType = 1280 + type; // Dự phòng cho các loại khác
+    }
+    
+    // Gọi phương thức gửi dữ liệu đến thiết bị với tham số phù hợp
+    // groupType = 3 cho dữ liệu sức khỏe, priority = 2 (trung bình)
+    this.sendDataType2Device(dataType, 3, data, 2, response);
+  }
+  
   // Gửi dữ liệu đến thiết bị (phương thức chính)
   public sendSingleData2Device(
     dataType: number, 
