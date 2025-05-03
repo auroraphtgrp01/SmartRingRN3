@@ -21,6 +21,7 @@ import {
 import { ycbtClientImpl } from '../core/YCBT';
 import { handleGetDeviceInfo } from '../services/DeviceService';
 import { dataSync, DataSyncEvent, SyncState } from '../datasync';
+import { healthDataSync } from '../core/HealthDataSync';
 
 // Main App
 export default function App() {
@@ -295,60 +296,69 @@ export default function App() {
     }
   };
 
+  // const sendEvent = async () => {
+  //   try {
+  //     if (device) {
+  //       addLog(`Bắt đầu đồng bộ dữ liệu từ thiết bị ${device.name || 'Unnamed'} (${device.id})...`);
+        
+  //       // Tạo callback cho DataSyncEvent
+  //       const syncEvent: DataSyncEvent = {
+  //         callback: (state: SyncState) => {
+  //           switch (state) {
+  //             case SyncState.START:
+  //               addLog('Bắt đầu đồng bộ dữ liệu...');
+  //               break;
+  //             case SyncState.SUCCESS:
+  //               addLog('Đồng bộ dữ liệu thành công!');
+  //               // Hiển thị dữ liệu raw đã đồng bộ
+  //               const responses = dataSync.getRawResponses();
+  //               for (const [type, data] of responses.entries()) {
+  //                 addLog(`Dữ liệu loại 0x${type.toString(16).toUpperCase()}: ${data.raw || 'N/A'}`);
+  //                 addLog(`  Mã trạng thái: ${data.code}`);
+  //               }
+                
+  //               // Hiển thị tất cả các gói raw dạng hex
+  //               addLog('\nTất cả các gói raw (Hex):');
+  //               const allPackets = dataSync.getAllRawPackets();
+  //               allPackets.forEach((packet, index) => {
+  //                 addLog(`${index + 1}. ${packet}`);
+  //               });
+                
+  //               // Hiển thị tất cả các gói raw dạng mảng byte có dấu
+  //               addLog('\nTất cả các gói raw (Byte):');
+  //               const allByteArrays = dataSync.getAllRawByteArrays();
+  //               allByteArrays.forEach((byteArray, index) => {
+  //                 addLog(`${index + 1}. ${byteArray.join(',')}`);
+  //               });
+  //               break;
+  //             case SyncState.FAILED:
+  //               addLog('Đồng bộ dữ liệu thất bại!');
+  //               break;
+  //             case SyncState.END:
+  //               addLog('Kết thúc quá trình đồng bộ.');
+  //               break;
+  //           }
+  //         }
+  //       };
+        
+  //       // Bắt đầu đồng bộ dữ liệu
+  //       dataSync.startDataSync(syncEvent);
+  //     } else {
+  //       addLog('Không có thiết bị được kết nối');
+  //     }
+  //   } catch (error) {
+  //     addLog(`Lỗi khi đồng bộ dữ liệu: ${error}`);
+  //   }
+  // };
+
   const sendEvent = async () => {
     try {
-      if (device) {
-        addLog(`Bắt đầu đồng bộ dữ liệu từ thiết bị ${device.name || 'Unnamed'} (${device.id})...`);
-        
-        // Tạo callback cho DataSyncEvent
-        const syncEvent: DataSyncEvent = {
-          callback: (state: SyncState) => {
-            switch (state) {
-              case SyncState.START:
-                addLog('Bắt đầu đồng bộ dữ liệu...');
-                break;
-              case SyncState.SUCCESS:
-                addLog('Đồng bộ dữ liệu thành công!');
-                // Hiển thị dữ liệu raw đã đồng bộ
-                const responses = dataSync.getRawResponses();
-                for (const [type, data] of responses.entries()) {
-                  addLog(`Dữ liệu loại 0x${type.toString(16).toUpperCase()}: ${data.raw || 'N/A'}`);
-                  addLog(`  Mã trạng thái: ${data.code}`);
-                }
-                
-                // Hiển thị tất cả các gói raw dạng hex
-                addLog('\nTất cả các gói raw (Hex):');
-                const allPackets = dataSync.getAllRawPackets();
-                allPackets.forEach((packet, index) => {
-                  addLog(`${index + 1}. ${packet}`);
-                });
-                
-                // Hiển thị tất cả các gói raw dạng mảng byte có dấu
-                addLog('\nTất cả các gói raw (Byte):');
-                const allByteArrays = dataSync.getAllRawByteArrays();
-                allByteArrays.forEach((byteArray, index) => {
-                  addLog(`${index + 1}. ${byteArray.join(',')}`);
-                });
-                break;
-              case SyncState.FAILED:
-                addLog('Đồng bộ dữ liệu thất bại!');
-                break;
-              case SyncState.END:
-                addLog('Kết thúc quá trình đồng bộ.');
-                break;
-            }
-          }
-        };
-        
-        // Bắt đầu đồng bộ dữ liệu
-        dataSync.startDataSync(syncEvent);
-      } else {
-        addLog('Không có thiết bị được kết nối');
-      }
+      console.warn(`Sending event to device`);
+      await healthDataSync.syncSleepData()
     } catch (error) {
-      addLog(`Lỗi khi đồng bộ dữ liệu: ${error}`);
+      console.error(`Error sending event: ${error}`);
     }
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -374,8 +384,11 @@ export default function App() {
               onPress={async () => {
                 try {
                   // First connect using standard BLE connection
-                  const connectedDevice = await ycbtClientImpl.connectBle(device.id);
-
+                  // const connectedDevice = await ycbtClientImpl.connectBle(device.id);
+                  const connectedDevice = await healthDataSync.connectToDevice(device.id);
+                  healthDataSync.startListeningForResponses((data) => {
+                    console.warn(`>>> Received data: ${data}`);
+                  })
                   if (connectedDevice) {
                     setDevice(connectedDevice);
                     addLog('Connected successfully!');
