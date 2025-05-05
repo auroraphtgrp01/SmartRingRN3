@@ -1,0 +1,95 @@
+# Comprehensive Rules
+
+## 1. Communication Principles
+
+- **Use Vietnamese in all situations:**
+  - All answers, explanations, analyses must be written in Vietnamese
+  - Comments in code should also use Vietnamese for better understanding
+  - Use clear wording, avoid mechanical translation from English to Vietnamese
+  - For technical terms without Vietnamese equivalents, the original term can be kept with a brief explanation if needed
+
+## 2. Analysis Process
+
+- **Comprehensive approach:**
+  - Always thoroughly analyze all aspects of the problem before providing solutions
+  - Clearly identify functional and non-functional requirements
+  - Evaluate alternative solutions before deciding
+  - Consider the impact of solutions on performance, security, and user experience
+  - Do not use simulated data, mock data in any situation
+- **Research methodology:**
+  - Study the existing codebase thoroughly to understand structure and logic
+  - Analyze in detail the properties, data relationships, and related business logic
+  - Look for design patterns being applied in the project
+  - Review libraries and frameworks being used to ensure consistency
+  - i have some java files about sleep decompile from 1 apk. i am trying to decode the data returned by ring. first, try to analyze how to unpack the data of java app into the form like sleepHisListBean
+
+Tôi có sử dụng frida để debug các method trong java ở runtime nhận được 1 log: log-debug.txt
+
+những gì tôi biết: gọi sync data giấc ngủ với lệnh 1284 qua method ( sendData2Device )
+
+sau đó response data về với khoảng 1-3 gói tin:
+gói 1: 16 byte, dạng: 05 04 10 00 01 00 03 00 00 00 64 01 00 00 70 1e
+ở uuid notif là: be940001-7333-be46-b7ae-689e71722bd5
+
+gói 2: dài tầm 182 byte, dạng: 05 13 b6 00 af fa 64 01 c4 72 a9 2f a1 ce a9 2f
+ff ff b0 1c 10 09 0f 36 f2 c4 72 a9 2f b9 04 00
+f1 7e 77 a9 2f ce 00 00 f3 4d 78 a9 2f 26 01 00
+f2 74 79 a9 2f 79 04 00 f1 ee 7d a9 2f 70 01 00
+f3 5f 7f a9 2f 60 06 00 f2 bf 85 a9 2f 6d 04 00
+f1 2d 8a a9 2f 7f 01 00 f3 ad 8b a9 2f d2 01 00
+f2 80 8d a9 2f a8 02 00 f1 29 90 a9 2f fc 00 00
+f3 25 91 a9 2f 68 00 00 f2 8d 91 a9 2f 2c 03 00
+f3 b9 94 a9 2f 98 04 00 f2 51 99 a9 2f 0c 00 00
+f3 5d 99 a9 2f ca 00 00 f2 27 9a a9 2f 5a 02 00
+f3 81 9c a9 2f 68 00 00 f2 e9 9c a9 2f 21 03 00
+f1 0a a0 a9 61 4b
+
+
+với uuid notif là: be940003-7333-be46-b7ae-689e71722bd5
+
+
+gói 3: dài tầm 182 byte, dạng: 05 13 b6 00 2f 19 01 00 f3 23 a1 a9 2f b8 01 00
+f2 db a2 a9 2f ff 02 00 f1 da a5 a9 2f 8c 00 00
+f2 66 a6 a9 2f 58 04 00 f1 bf aa a9 2f 92 01 00
+f3 52 ac a9 2f 9c 01 00 f2 ef ad a9 2f b7 04 00
+f1 a7 b2 a9 2f 20 01 00 f3 c8 b3 a9 2f 23 02 00
+f2 eb b5 a9 2f 52 06 00 f3 3d bc a9 2f 20 01 00
+f2 5d bd a9 2f 37 01 00 f3 94 be a9 2f ad 01 00
+f2 41 c0 a9 2f 18 01 00 f3 59 c1 a9 2f 62 02 00
+f2 bb c3 a9 2f 03 02 00 f3 be c5 a9 2f ed 00 00
+f2 ab c6 a9 2f ef 00 00 f3 9a c7 a9 2f 8d 00 00
+f2 27 c8 a9 2f 4a 05 00 f3 71 cd a9 2f 06 01 00
+f2 77 ce a9 b2 4d
+
+với uuid notif là: be940003-7333-be46-b7ae-689e71722bd5
+
+gói 4: dài tầm 10 byte: 05 13 0a 00 2f 2a 00 00 dc b2
+với uuid notif là: be940003-7333-be46-b7ae-689e71722bd5
+
+
+
+với gói 4, hay có những gói sau đó nữa hay không tôi không rõ. nhưng gói data giấc ngủ thường được nối lại dàn trên 360 byte, sau đó được đưa vào data unpack để giải mã
+
+những constant tôi đã biết: 
+    public static final String UUID_C_1 = "be940001-7333-be46-b7ae-689e71722bd5";
+    public static final String UUID_C_2 = "be940002-7333-be46-b7ae-689e71722bd5";
+    public static final String UUID_C_3 = "be940003-7333-be46-b7ae-689e71722bd5"; ( đây là write uuid và notify uuid )
+	   public static final String UUID_HID_S = "00001812-0000-1000-8000-00805f9b34fb";
+    public static final String UUID_S = "be940000-7333-be46-b7ae-689e71722bd5"; ( đây là service uuid )
+	
+	
+các method được xử lý theo flow: DataSyncUtils.java -> gọi qua YCBTClient.java ( healthHistoryData ) -> gọi qua YCBTClientImpl ( sendDataType2Device ) -> xử lý logic rồi gửi tín hiệu qua nhẫn
+tôi biết, dữ liệu được xử lý khi response về qua  bleDataResponse 
+
+ở BleHelper.java, mOnServicesDiscovered có vẻ là method đăng ký notification
+
+và các method đăng ký, tìm uuid, ... cũng ở BleHelper.java
+
+
+Mục tiêu của tôi: NGHIÊN CỨU SÂU TRONG SOURCE CODE .JAVA FILE, CHỈ RESEARCH CÁC LOGIC TRÊN FILE .JAVA, K TÌM TRONG .TS,TSX VÌ LOGIC Ở ĐÂY CHƯA ĐÚNG.
+SAU ĐÓ, TRIỂN KHAI ĐƯỢC QUY TRÌNH GỬI LỆNH LẤY GIẤC NGỦ QUA THIẾT BỊ BẰNG BLUETOOTH, SAU ĐÓ LẮNG NGHE CÁC GÓI DỮ LIỆU TỪ NHẪN TRẢ VỀ THÔNG QUA CÁC KÊNH UUID. 
+RỒI TRIỂN KHAI LÊN TRÊN SOURCE CODE REACT NATIVE SMARTRINGRN3 CÁC LOGIC CỦA FLOW LẤY VÀ NHẬN GIẤC NGỦ
+
+CÁC LOGIC BẠN CẦN CÓ THỂ NẰM TRONG CÁC FILE: YCBTClient.java, YCBTClientImpl.java, BleHelper.java, DataSyncUtils.java, CMD.java
+
+KHÔNG HARDCODE, MÔ PHỎNG DỮ LIỆU, TỰ SUY LOGIC VỚ VẨN. TẤT CẢ CÁC LOGIC PHẢI TỪ TRONG .JAVA FILE, NGHIÊN CỨU CÓ CĂN CỨ.

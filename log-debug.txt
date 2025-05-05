@@ -1,0 +1,1652 @@
+
+Le Minh Tuan@DESKTOP-GBE7829 MINGW64 ~/Downloads/frida
+$ frida -U -l send.js -p $(adb shell pidof com.zhuoting.healthyucheng)
+     ____
+    / _  |   Frida 16.7.4 - A world-class dynamic instrumentation toolkit
+   | (_| |
+    > _  |   Commands:
+   /_/ |_|       help      -> Displays the help system
+   . . . .       object?   -> Display information about 'object'
+   . . . .       exit/quit -> Exit
+   . . . .
+   . . . .   More info at https://frida.re/docs/home/
+   . . . .
+   . . . .   Connected to 21081111RG (id=6hrshijfhqljxw5d)
+Attaching...
+[+] Script debug luồng dữ liệu giấc ngủ đã được tải
+[+] Hook các phương thức YCBT SDK đã bắt đầu
+YCBTClientImpl.bleDataResponse() hook đã được cài đặt thành công
+[+] Đã hook YCBTClient.deleteHealthHistoryData() với chức năng chặn xóa dữ liệu giấc ngủ và dữ liệu nhẫn
+[+] Đã hook thành công các phương thức liên quan đến luồng dữ liệu giấc ngủ
+[21081111RG::PID::31760 ]->
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 256 (0x100)
+[+]   - data: -23,7,5,4,13,4,19,6
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.pushQueue(Unknown Source:260)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendSingleData2Device(Unknown Source:102)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleStateResponse(Unknown Source:91)
+        at com.yucheng.ycbtsdk.gatt.BleHelper.callBackState(Unknown Source:4)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onDescriptorWrite(Unknown Source:247)
+        at android.bluetooth.BluetoothGatt$1$10.run(BluetoothGatt.java:682)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onDescriptorWrite(BluetoothGatt.java:677)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:317)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+01 00 07 00 00 cd 3e
+[+] i3 (cmd type): 1
+[+] i4 (cmd subtype): 0
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 513 (0x201)
+[+]   - data: 71,70
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:213)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:213)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetSettingHandle(Unknown Source:150)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:420)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 66
+[+] bArr data:
+02 01 42 00 f9 09 00 00 00 00 0c d8 10 04 01 b2
+b6 00 40 0f 00 14 50 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f3 29
+[+] i3 (cmd type): 2
+[+] i4 (cmd subtype): 1
+[+] i5 (data length): 66
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 539 (0x21b)
+[+]   - data:
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetGetHandle(Unknown Source:942)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:416)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+02 1b 07 00 04 23 95
+[+] i3 (cmd type): 2
+[+] i4 (cmd subtype): 27
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 512 (0x200)
+[+]   - data: 71,67
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetGetHandle(Unknown Source:942)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:416)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 30
+[+] bArr data:
+02 00 1e 00 a3 00 0e 02 00 0f 00 01 00 03 00 02
+00 00 00 00 00 00 01 00 00 00 00 00 03 9c
+[+] i3 (cmd type): 2
+[+] i4 (cmd subtype): 0
+[+] i5 (data length): 30
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: 0000ae02-0000-1000-8000-00805f9b34fb
+[+] bArr length: 17
+[+] bArr data:
+01 fb e3 2c 7a 45 35 87 ee ca 2f 0e db 1a e7 07
+a6
+[+] i3 (cmd type): 1
+[+] i4 (cmd subtype): 251
+[+] i5 (data length): 11491
+[+] data length match: false
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: 0000ae02-0000-1000-8000-00805f9b34fb
+[+] bArr length: 17
+[+] bArr data:
+00 3b 96 b7 ec 35 7e 9d bf ba c3 f7 f7 31 28 9c
+d2
+[+] i3 (cmd type): 0
+[+] i4 (cmd subtype): 59
+[+] i5 (data length): 46998
+[+] data length match: false
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: 0000ae02-0000-1000-8000-00805f9b34fb
+[+] bArr length: 5
+[+] bArr data:
+02 70 61 73 73
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 512 (0x200)
+[+]   - data: 71,67
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.pushQueue(Unknown Source:260)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendSingleData2Device(Unknown Source:102)
+        at com.yucheng.ycbtsdk.YCBTClient.getDeviceInfo(Unknown Source:12)
+        at com.yucheng.smarthealthpro.MainActivity.getCompile(MainActivity.java:1100)
+        at java.lang.reflect.Method.invoke(Native Method)
+        at org.greenrobot.eventbus.EventBus.invokeSubscriber(EventBus.java:517)
+        at org.greenrobot.eventbus.EventBus.invokeSubscriber(EventBus.java:511)
+        at org.greenrobot.eventbus.HandlerPoster.handleMessage(HandlerPoster.java:67)
+        at android.os.Handler.dispatchMessage(Handler.java:106)
+        at android.os.Looper.loopOnce(Looper.java:222)
+        at android.os.Looper.loop(Looper.java:314)
+        at android.app.ActivityThread.main(ActivityThread.java:8716)
+        at java.lang.reflect.Method.invoke(Native Method)
+        at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:565)
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1081)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: 0000ae02-0000-1000-8000-00805f9b34fb
+[+] bArr length: 70
+[+] bArr data:
+fe dc ba 00 03 00 3e 00 ba 02 00 20 05 01 00 00
+00 00 09 02 c7 17 28 88 3b 54 0e 00 06 04 00 00
+00 4e 00 02 05 00 03 08 00 01 02 09 00 02 0a 00
+02 06 01 05 0d 00 80 02 1c 08 11 00 c7 17 28 5c
+d2 f7 02 13 00 ef
+[+] i3 (cmd type): 254
+[+] i4 (cmd subtype): 220
+[+] i5 (data length): 186
+[+] data length match: false
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 30
+[+] bArr data:
+02 00 1e 00 a3 00 0e 02 00 0f 21 01 00 03 e3 01
+74 22 00 00 28 78 01 01 00 00 00 00 67 61
+[+] i3 (cmd type): 2
+[+] i4 (cmd subtype): 0
+[+] i5 (data length): 30
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 512 (0x200)
+[+]   - data: 71,67
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.pushQueue(Unknown Source:260)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendSingleData2Device(Unknown Source:102)
+        at com.yucheng.ycbtsdk.YCBTClient.getDeviceInfo(Unknown Source:12)
+        at com.yucheng.smarthealthpro.home.fragment.HomeFragment.getCompile(HomeFragment.java:1198)
+        at java.lang.reflect.Method.invoke(Native Method)
+        at org.greenrobot.eventbus.EventBus.invokeSubscriber(EventBus.java:517)
+        at org.greenrobot.eventbus.EventBus.invokeSubscriber(EventBus.java:511)
+        at org.greenrobot.eventbus.HandlerPoster.handleMessage(HandlerPoster.java:67)
+        at android.os.Handler.dispatchMessage(Handler.java:106)
+        at android.os.Looper.loopOnce(Looper.java:222)
+        at android.os.Looper.loop(Looper.java:314)
+        at android.app.ActivityThread.main(ActivityThread.java:8716)
+        at java.lang.reflect.Method.invoke(Native Method)
+        at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:565)
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1081)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 30
+[+] bArr data:
+02 00 1e 00 a3 00 0e 02 00 0f 21 01 00 03 e3 01
+00 00 00 00 00 00 01 00 00 00 00 00 e5 3a
+[+] i3 (cmd type): 2
+[+] i4 (cmd subtype): 0
+[+] i5 (data length): 30
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 519 (0x207)
+[+]   - data: 67,70
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetGetHandle(Unknown Source:942)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:416)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+02 07 07 00 fc a1 af
+[+] i3 (cmd type): 2
+[+] i4 (cmd subtype): 7
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 1282 (0x502)
+[+]   - data:
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:365)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 16
+[+] bArr data:
+05 02 10 00 02 00 01 00 00 00 1c 00 00 00 f4 5f
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 2
+[+] i5 (data length): 16
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940003-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 34
+[+] bArr data:
+05 11 22 00 f0 cc a9 2f f8 d3 a9 2f 6d 00 45 00
+04 00 f8 d3 a9 2f 00 db a9 2f bd 00 78 00 07 00
+92 ba
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 17
+[+] i5 (data length): 34
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 12
+[+] bArr data:
+05 80 0c 00 01 00 1c 00 70 07 c7 e4
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 128
+[+] i5 (data length): 12
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 1408 (0x580)
+[+]   - data: 0
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetHealthHandle(Unknown Source:176)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:404)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+
+[+] YCBTClient.deleteHealthHistoryData() được gọi
+    └─ Tham số đầu vào: type = 1344
+    └─ ĐÃ CHẶN XÓA DỮ LIỆU NHẪN (type = 1344)!
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 1284 (0x504)
+[+]   - data:
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleOnCharacteristicWrite(Unknown Source:107)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicWrite(Unknown Source:108)
+        at android.bluetooth.BluetoothGatt$1$7.run(BluetoothGatt.java:539)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onCharacteristicWrite(BluetoothGatt.java:534)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:279)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 16
+[+] bArr data:
+05 04 10 00 01 00 03 00 00 00 64 01 00 00 70 1e
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 4
+[+] i5 (data length): 16
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940003-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 182
+[+] bArr data:
+05 13 b6 00 af fa 64 01 c4 72 a9 2f a1 ce a9 2f
+ff ff b0 1c 10 09 0f 36 f2 c4 72 a9 2f b9 04 00
+f1 7e 77 a9 2f ce 00 00 f3 4d 78 a9 2f 26 01 00
+f2 74 79 a9 2f 79 04 00 f1 ee 7d a9 2f 70 01 00
+f3 5f 7f a9 2f 60 06 00 f2 bf 85 a9 2f 6d 04 00
+f1 2d 8a a9 2f 7f 01 00 f3 ad 8b a9 2f d2 01 00
+f2 80 8d a9 2f a8 02 00 f1 29 90 a9 2f fc 00 00
+f3 25 91 a9 2f 68 00 00 f2 8d 91 a9 2f 2c 03 00
+f3 b9 94 a9 2f 98 04 00 f2 51 99 a9 2f 0c 00 00
+f3 5d 99 a9 2f ca 00 00 f2 27 9a a9 2f 5a 02 00
+f3 81 9c a9 2f 68 00 00 f2 e9 9c a9 2f 21 03 00
+f1 0a a0 a9 61 4b
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 19
+[+] i5 (data length): 182
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940003-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 182
+[+] bArr data:
+05 13 b6 00 2f 19 01 00 f3 23 a1 a9 2f b8 01 00
+f2 db a2 a9 2f ff 02 00 f1 da a5 a9 2f 8c 00 00
+f2 66 a6 a9 2f 58 04 00 f1 bf aa a9 2f 92 01 00
+f3 52 ac a9 2f 9c 01 00 f2 ef ad a9 2f b7 04 00
+f1 a7 b2 a9 2f 20 01 00 f3 c8 b3 a9 2f 23 02 00
+f2 eb b5 a9 2f 52 06 00 f3 3d bc a9 2f 20 01 00
+f2 5d bd a9 2f 37 01 00 f3 94 be a9 2f ad 01 00
+f2 41 c0 a9 2f 18 01 00 f3 59 c1 a9 2f 62 02 00
+f2 bb c3 a9 2f 03 02 00 f3 be c5 a9 2f ed 00 00
+f2 ab c6 a9 2f ef 00 00 f3 9a c7 a9 2f 8d 00 00
+f2 27 c8 a9 2f 4a 05 00 f3 71 cd a9 2f 06 01 00
+f2 77 ce a9 b2 4d
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 19
+[+] i5 (data length): 182
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940003-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 10
+[+] bArr data:
+05 13 0a 00 2f 2a 00 00 dc b2
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 19
+[+] i5 (data length): 10
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 12
+[+] bArr data:
+05 80 0c 00 03 00 64 01 3e e1 2a 2c
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 128
+[+] i5 (data length): 12
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 1408 (0x580)
+[+]   - data: 0
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetHealthHandle(Unknown Source:176)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:404)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+
+[+] YCBTClient.deleteHealthHistoryData() được gọi
+    └─ Tham số đầu vào: type = 1345
+    └─ ĐÃ CHẶN XÓA DỮ LIỆU NHẪN (type = 1345)!
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 1286 (0x506)
+[+]   - data:
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleOnCharacteristicWrite(Unknown Source:107)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicWrite(Unknown Source:108)
+        at android.bluetooth.BluetoothGatt$1$7.run(BluetoothGatt.java:539)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onCharacteristicWrite(BluetoothGatt.java:534)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:279)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 16
+[+] bArr data:
+05 06 10 00 08 00 01 00 00 00 30 00 00 00 e4 b6
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 6
+[+] i5 (data length): 16
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940003-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 54
+[+] bArr data:
+05 15 36 00 92 6a a9 2f 00 57 af 78 a9 2f 00 3d
+ca 86 a9 2f 00 42 d5 94 a9 2f 00 39 d3 a2 a9 2f
+00 37 f9 b0 a9 2f 00 3c fa be a9 2f 00 43 0a cd
+a9 2f 00 3c 43 66
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 21
+[+] i5 (data length): 54
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 12
+[+] bArr data:
+05 80 0c 00 01 00 30 00 e7 0f cf 9c
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 128
+[+] i5 (data length): 12
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 1408 (0x580)
+[+]   - data: 0
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetHealthHandle(Unknown Source:176)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:404)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+
+[+] YCBTClient.deleteHealthHistoryData() được gọi
+    └─ Tham số đầu vào: type = 1346
+    └─ ĐÃ CHẶN XÓA DỮ LIỆU NHẪN (type = 1346)!
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 1288 (0x508)
+[+]   - data:
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleOnCharacteristicWrite(Unknown Source:107)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicWrite(Unknown Source:108)
+        at android.bluetooth.BluetoothGatt$1$7.run(BluetoothGatt.java:539)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onCharacteristicWrite(BluetoothGatt.java:534)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:279)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 16
+[+] bArr data:
+05 08 10 00 08 00 01 00 00 00 40 00 00 00 a0 70
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 8
+[+] i5 (data length): 16
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940003-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 70
+[+] bArr data:
+05 17 46 00 92 6a a9 2f 01 73 4d 57 af 78 a9 2f
+01 6a 46 3d ca 86 a9 2f 01 6d 48 42 d5 94 a9 2f
+01 67 46 39 d3 a2 a9 2f 01 65 45 37 f9 b0 a9 2f
+01 69 44 3c fa be a9 2f 01 6c 46 43 0a cd a9 2f
+01 6b 44 3c f0 c2
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 23
+[+] i5 (data length): 70
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 12
+[+] bArr data:
+05 80 0c 00 01 00 40 00 66 41 19 5f
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 128
+[+] i5 (data length): 12
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 1408 (0x580)
+[+]   - data: 0
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetHealthHandle(Unknown Source:176)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:404)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+
+[+] YCBTClient.deleteHealthHistoryData() được gọi
+    └─ Tham số đầu vào: type = 1347
+    └─ ĐÃ CHẶN XÓA DỮ LIỆU NHẪN (type = 1347)!
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 1289 (0x509)
+[+]   - data:
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleOnCharacteristicWrite(Unknown Source:107)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicWrite(Unknown Source:108)
+        at android.bluetooth.BluetoothGatt$1$7.run(BluetoothGatt.java:539)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onCharacteristicWrite(BluetoothGatt.java:534)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:279)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 16
+[+] bArr data:
+05 09 10 00 08 00 01 00 00 00 a0 00 00 00 29 b1
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 9
+[+] i5 (data length): 16
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940003-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 166
+[+] bArr data:
+05 18 a6 00 92 6a a9 2f 00 00 57 73 4d 62 12 2b
+06 00 0f 00 00 00 4c 5c af 78 a9 2f 00 00 3d 6a
+46 60 0c 26 04 00 0f 00 00 00 04 eb ca 86 a9 2f
+00 00 42 6d 48 61 0d 2d 06 00 0f 00 00 00 04 41
+d5 94 a9 2f 00 00 39 67 46 5e 0b 26 02 00 0f 00
+00 00 d9 8d d3 a2 a9 2f 00 00 37 65 45 5d 0b 2a
+04 00 0f 00 00 00 56 3e f9 b0 a9 2f 00 00 3c 69
+44 60 0c 29 02 00 0f 00 00 00 91 4f fa be a9 2f
+00 00 43 6c 46 62 0d 25 05 00 0f 00 00 00 f6 71
+0a cd a9 2f 00 00 3c 6b 44 60 0c 29 06 00 0f 00
+00 00 2c 7c 73 29
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 24
+[+] i5 (data length): 166
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 12
+[+] bArr data:
+05 80 0c 00 01 00 a0 00 8c bf 5b 2a
+[+] i3 (cmd type): 5
+[+] i4 (cmd subtype): 128
+[+] i5 (data length): 12
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 1408 (0x580)
+[+]   - data: 0
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetHealthHandle(Unknown Source:176)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:404)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+
+[+] YCBTClient.deleteHealthHistoryData() được gọi
+    └─ Tham số đầu vào: type = 1348
+    └─ ĐÃ CHẶN XÓA DỮ LIỆU NHẪN (type = 1348)!
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 777 (0x309)
+[+]   - data: 1,0,2
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleOnCharacteristicWrite(Unknown Source:107)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicWrite(Unknown Source:108)
+        at android.bluetooth.BluetoothGatt$1$7.run(BluetoothGatt.java:539)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onCharacteristicWrite(BluetoothGatt.java:534)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:279)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+03 09 07 00 00 39 89
+[+] i3 (cmd type): 3
+[+] i4 (cmd subtype): 9
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 274 (0x112)
+[+]   - data: 15
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleOnCharacteristicWrite(Unknown Source:29)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicWrite(Unknown Source:108)
+        at android.bluetooth.BluetoothGatt$1$7.run(BluetoothGatt.java:539)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onCharacteristicWrite(BluetoothGatt.java:534)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:279)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: 0000ae02-0000-1000-8000-00805f9b34fb
+[+] bArr length: 11
+[+] bArr data:
+fe dc ba 00 07 00 03 00 bb ff ef
+[+] i3 (cmd type): 254
+[+] i4 (cmd subtype): 220
+[+] i5 (data length): 186
+[+] data length match: false
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+01 12 07 00 fc 91 e6
+[+] i3 (cmd type): 1
+[+] i4 (cmd subtype): 18
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 260 (0x104)
+[+]   - data: 0,0,0,0,0,0
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:365)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+01 04 07 00 00 3c f4
+[+] i3 (cmd type): 1
+[+] i4 (cmd subtype): 4
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 268 (0x10c)
+[+]   - data: 1,60
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetSettingHandle(Unknown Source:150)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:420)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+01 0c 07 00 00 ff 71
+[+] i3 (cmd type): 1
+[+] i4 (cmd subtype): 12
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 265 (0x109)
+[+]   - data: 0,49,52
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetSettingHandle(Unknown Source:150)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:420)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+01 09 07 00 00 ba cd
+[+] i3 (cmd type): 1
+[+] i4 (cmd subtype): 9
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 515 (0x203)
+[+]   - data: 71,80
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetSettingHandle(Unknown Source:150)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:420)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 11
+[+] bArr data:
+02 03 0b 00 52 31 31 4d 00 a6 df
+[+] i3 (cmd type): 2
+[+] i4 (cmd subtype): 3
+[+] i5 (data length): 11
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 259 (0x103)
+[+]   - data: -86,65,0,20
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetGetHandle(Unknown Source:942)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:416)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+01 03 07 00 00 11 a5
+[+] i3 (cmd type): 1
+[+] i4 (cmd subtype): 3
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 552 (0x228)
+[+]   - data: 71,70
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetSettingHandle(Unknown Source:150)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:420)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+02 28 07 00 fc 01 4c
+[+] i3 (cmd type): 2
+[+] i4 (cmd subtype): 40
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 512 (0x200)
+[+]   - data: 71,67
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:365)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 30
+[+] bArr data:
+02 00 1e 00 a3 00 0e 02 00 0f 00 01 00 03 00 02
+00 00 00 00 00 00 01 00 00 00 00 00 03 9c
+[+] i3 (cmd type): 2
+[+] i4 (cmd subtype): 0
+[+] i5 (data length): 30
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 9999 (0x270f)
+[+]   - data: 2
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetGetHandle(Unknown Source:942)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:416)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+27 0f 07 00 fb 66 71
+[+] i3 (cmd type): 39
+[+] i4 (cmd subtype): 15
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 9999 (0x270f)
+[+]   - data: 2
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:365)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+27 0f 07 00 fb 66 71
+[+] i3 (cmd type): 39
+[+] i4 (cmd subtype): 15
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 9999 (0x270f)
+[+]   - data: 2
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:365)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+27 0f 07 00 fb 66 71
+[+] i3 (cmd type): 39
+[+] i4 (cmd subtype): 15
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 9999 (0x270f)
+[+]   - data: 2
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:365)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+27 0f 07 00 fb 66 71
+[+] i3 (cmd type): 39
+[+] i4 (cmd subtype): 15
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 9999 (0x270f)
+[+]   - data: 2
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:365)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+27 0f 07 00 fb 66 71
+[+] i3 (cmd type): 39
+[+] i4 (cmd subtype): 15
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 777 (0x309)
+[+]   - data: 1,0,2
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleOnCharacteristicWrite(Unknown Source:29)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicWrite(Unknown Source:108)
+        at android.bluetooth.BluetoothGatt$1$7.run(BluetoothGatt.java:539)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onCharacteristicWrite(BluetoothGatt.java:534)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:279)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+03 09 07 00 00 39 89
+[+] i3 (cmd type): 3
+[+] i4 (cmd subtype): 9
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 777 (0x309)
+[+]   - data: 1,0,2
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetAppControlHandle(Unknown Source:599)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:412)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+03 09 07 00 00 39 89
+[+] i3 (cmd type): 3
+[+] i4 (cmd subtype): 9
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 777 (0x309)
+[+]   - data: 1,0,2
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetAppControlHandle(Unknown Source:599)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:412)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+03 09 07 00 00 39 89
+[+] i3 (cmd type): 3
+[+] i4 (cmd subtype): 9
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 777 (0x309)
+[+]   - data: 1,0,2
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetAppControlHandle(Unknown Source:599)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:412)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+03 09 07 00 00 39 89
+[+] i3 (cmd type): 3
+[+] i4 (cmd subtype): 9
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 777 (0x309)
+[+]   - data: 1,0,2
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.popQueue(Unknown Source:133)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.packetAppControlHandle(Unknown Source:599)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Unknown Source:412)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.bleDataResponse(Native Method)
+        at com.yucheng.ycbtsdk.gatt.BleHelper$1.onCharacteristicChanged(Unknown Source:63)
+        at android.bluetooth.BluetoothGattCallback.onCharacteristicChanged(BluetoothGattCallback.java:159)
+        at android.bluetooth.BluetoothGatt$1$8.run(BluetoothGatt.java:569)
+        at android.bluetooth.BluetoothGatt.runOrQueueCallback(BluetoothGatt.java:941)
+        at android.bluetooth.BluetoothGatt.-$$Nest$mrunOrQueueCallback(Unknown Source:0)
+        at android.bluetooth.BluetoothGatt$1.onNotify(BluetoothGatt.java:563)
+        at android.bluetooth.IBluetoothGattCallback$Stub.onTransact(IBluetoothGattCallback.java:329)
+        at android.os.Binder.execTransactInternal(Binder.java:1351)
+        at android.os.Binder.execTransact(Binder.java:1282)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+03 09 07 00 00 39 89
+[+] i3 (cmd type): 3
+[+] i4 (cmd subtype): 9
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940003-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 12
+[+] bArr data:
+06 00 0c 00 00 00 00 00 00 00 31 83
+[+] i3 (cmd type): 6
+[+] i4 (cmd subtype): 0
+[+] i5 (data length): 12
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 777 (0x309)
+[+]   - data: 1,0,2
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.pushQueue(Unknown Source:260)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendDataType2Device(Unknown Source:9)
+        at com.yucheng.ycbtsdk.YCBTClient.appRealDataFromDevice(Unknown Source:24)
+        at com.yucheng.ycbtsdk.YCBTClient.appRealSportFromDevice(Unknown Source:1)
+        at com.yucheng.smarthealthpro.home.fragment.HomeFragment.syncRealData(HomeFragment.java:1006)
+        at com.yucheng.smarthealthpro.home.fragment.HomeFragment.syncFinish(HomeFragment.java:1848)
+        at com.yucheng.smarthealthpro.MainActivity$10.run(MainActivity.java:1054)
+        at android.os.Handler.handleCallback(Handler.java:958)
+        at android.os.Handler.dispatchMessage(Handler.java:99)
+        at android.os.Looper.loopOnce(Looper.java:222)
+        at android.os.Looper.loop(Looper.java:314)
+        at android.app.ActivityThread.main(ActivityThread.java:8716)
+        at java.lang.reflect.Method.invoke(Native Method)
+        at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:565)
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1081)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+03 09 07 00 00 39 89
+[+] i3 (cmd type): 3
+[+] i4 (cmd subtype): 9
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+
+[+] YCBTClientImpl.sendData2Device() được gọi
+[+] Tham số đầu vào:
+[+]   - dataType: 777 (0x309)
+[+]   - data: 1,0,2
+[+] Stack trace:
+java.lang.Exception
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendData2Device(Native Method)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.frontQueue(Unknown Source:192)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.pushQueue(Unknown Source:260)
+        at com.yucheng.ycbtsdk.core.YCBTClientImpl.sendDataType2Device(Unknown Source:9)
+        at com.yucheng.ycbtsdk.YCBTClient.appRealDataFromDevice(Unknown Source:24)
+        at com.yucheng.ycbtsdk.YCBTClient.appRealSportFromDevice(Unknown Source:1)
+        at com.yucheng.smarthealthpro.home.fragment.HomeFragment.syncRealData(HomeFragment.java:1006)
+        at com.yucheng.smarthealthpro.home.fragment.HomeFragment.syncFinish(HomeFragment.java:1848)
+        at com.yucheng.smarthealthpro.MainActivity$10.run(MainActivity.java:1054)
+        at android.os.Handler.handleCallback(Handler.java:958)
+        at android.os.Handler.dispatchMessage(Handler.java:99)
+        at android.os.Looper.loopOnce(Looper.java:222)
+        at android.os.Looper.loop(Looper.java:314)
+        at android.app.ActivityThread.main(ActivityThread.java:8716)
+        at java.lang.reflect.Method.invoke(Native Method)
+        at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:565)
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1081)
+
+[+] YCBTClientImpl.sendData2Device() kết thúc
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940001-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 7
+[+] bArr data:
+03 09 07 00 00 39 89
+[+] i3 (cmd type): 3
+[+] i4 (cmd subtype): 9
+[+] i5 (data length): 7
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
+================== bleDataResponse HOOK ==================
+[+] i2: 0
+[+] str: be940003-7333-be46-b7ae-689e71722bd5
+[+] bArr length: 12
+[+] bArr data:
+06 00 0c 00 00 00 00 00 00 00 31 83
+[+] i3 (cmd type): 6
+[+] i4 (cmd subtype): 0
+[+] i5 (data length): 12
+[+] data length match: true
+[+] isFlag: false
+[+] isOta: false
+========== bleDataResponse HOOK END ==========
